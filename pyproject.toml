@@ -1,0 +1,15 @@
+[tool.poetry]
+authors = ["Syed Kamran Ahmed <syedkamranahmed@gmail.com>"]
+description = "Syncs youtube videos to notion"
+name = "notion-yt-sync"
+readme = "README.md"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+python-dotenv = "^1.0.1"
+requests = "^2.32.3"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]
