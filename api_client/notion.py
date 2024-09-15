@@ -50,6 +50,8 @@ class NotionClient:
         return response.json()
     
     def extract_video_id_from_page(self, page_json):
+        if (len(page_json['results']) == 0):
+            return None
         video_id_column_name = self._DATABASE_COLUMN_NAMES_MAP['VIDEO_ID']
         video_id_column = page_json['results'][0]['properties'][video_id_column_name]
         content = video_id_column['rich_text'][0]['text']['content']
