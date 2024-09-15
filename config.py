@@ -35,6 +35,7 @@ class Config:
         """
         self.ENVIRONMENT = self._get_env_var("ENVIRONMENT")
         self.NOTION_INTERNAL_INTEGRATION_SECRET = self._get_env_var("NOTION_INTERNAL_INTEGRATION_SECRET")
+        self.NOTION_API_BASE_URL = self._get_env_var("NOTION_API_BASE_URL")
 
         if self.ENVIRONMENT == "local":
             with open('./youtube_channels_config.json', 'r') as file:
