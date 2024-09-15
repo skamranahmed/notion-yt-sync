@@ -160,6 +160,31 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
+name = "scrapetube"
+version = "2.5.1"
+description = "Scrape youtube without the official youtube api and without selenium."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "scrapetube-2.5.1-py3-none-any.whl", hash = "sha256:4ede6e701001f280f3b23ba20f109556b24502b756b9732436571783b03ed91d"},
+]
+
+[package.dependencies]
+requests = "*"
+typing-extensions = "*"
+
+[[package]]
+name = "typing-extensions"
+version = "4.12.2"
+description = "Backported and Experimental Type Hints for Python 3.8+"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d"},
+    {file = "typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"},
+]
+
+[[package]]
 name = "urllib3"
 version = "2.2.3"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -179,4 +204,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "104d5b67251b5a53a3d567e2faefe53553f36551ae2686a59f9382fac4be29f6"
+content-hash = "82e3bb70696248a6bae27b15fc4ea5de82d8ab544b688f500f2bfe1900a4b7fc"
