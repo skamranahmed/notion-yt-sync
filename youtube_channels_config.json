@@ -3,5 +3,10 @@
         "name": "WyngX",
         "channel_url": "https://www.youtube.com/@_WyngX",
         "notion_database_id": "NOTION_DATABASE_ID_WYNGX"
+    },
+    {
+        "name": "Veritasium",
+        "channel_url": "https://www.youtube.com/@veritasium",
+        "notion_database_id": "NOTION_DATABASE_ID_VERITASIUM"
     }
 ]
