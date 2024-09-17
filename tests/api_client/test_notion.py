@@ -210,3 +210,43 @@ class TestNotionClient:
             video_id = client.extract_video_id_from_page(page_response)
 
             assert video_id == 'JucD81ofaGY', "Expected extract_video_id_from_page to return 'JucD81ofaGY', but it did not return 'JucD81ofaGY'"
+
+    class TestCreatePageInDatabase:
+        def test_create_page_in_database_returns_non_200_status_code(self, client, mock_post):
+            mock_response = Mock()
+            mock_response.status_code = 400
+            mock_response.raise_for_status.side_effect = requests.HTTPError()
+            mock_post.return_value = mock_response
+
+            exception_raised = False
+            error_message = ""
+
+            try:
+                client.create_page_in_database('database_id', 'video_id', 'video_link', 'title')
+            except NotionAPIError as e:
+                exception_raised = True
+                error_message = str(e)
+
+            assert exception_raised == True, "Expected NotionAPIError to be raised, but it was not raised"
+            assert "notion api error #create_page_in_database , got status code: 400" in error_message, "Expected error message did not match"
+
+            assert mock_post.call_count == 1, "Expected mock_post to be called exactly once, but it was not called exactly once"
+
+        def test_create_page_in_database_returns_200_status_code(self, client, mock_post):
+            mock_response = Mock()
+            mock_response.status_code = 200
+            mock_post.return_value = mock_response
+
+            exception_raised = False
+            error_message = ""
+            
+            try:
+                client.create_page_in_database('database_id', 'video_id', 'video_link', 'title')
+            except NotionAPIError as e:
+                exception_raised = True
+                error_message = str(e)
+
+            assert exception_raised == False, "Expected NotionAPIError not to be raised, but it was raised"
+            assert error_message == "", "Expected error message to be empty, but it was not empty"
+            
+            assert mock_post.call_count == 1, "Expected mock_post to be called exactly once, but it was not called exactly once"
