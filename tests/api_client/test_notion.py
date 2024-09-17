@@ -151,3 +151,62 @@ class TestNotionClient:
             assert error_message == "", "Expected error message to be empty, but it was not empty"
 
             assert mock_post.call_count == 1, "Expected mock_post to be called exactly once, but it was not called exactly once"
+
+    class TestExtractVideoIdFromPage:
+        def test_extract_video_id_from_page_when_page_has_empty_results(self, client):
+            empty_page_response = {
+                'object': 'list',
+                'results': [],
+                'next_cursor': None,
+                'has_more': False,
+                'type': 'page_or_database',
+                'page_or_database': {},
+                'request_id': '79701ac1-c6ff-4345-b4b0-c8c438258f19'
+            }
+
+            video_id = client.extract_video_id_from_page(empty_page_response)
+
+            assert video_id == None, "Expected extract_video_id_from_page to return None, but it did not return None"
+        
+        def test_extract_video_id_from_page_when_page_has_results(self, client):
+            page_response = {
+                'object': 'list',
+                'results': [{
+                    'object': 'page',
+                    'id': '104a0c22-0c52-816a-a606-db88c19e40af',
+                    'created_time': '2024-09-17T18:13:00.000Z',
+                    'last_edited_time': '2024-09-17T18:13:00.000Z',
+                    'created_by': {'object': 'user', 'id': 'a3c09b4b-f1a0-4f0a-bb99-a7c7e739fe0d'},
+                    'last_edited_by': {'object': 'user', 'id': 'a3c09b4b-f1a0-4f0a-bb99-a7c7e739fe0d'},
+                    'cover': None,
+                    'icon': None,
+                    'parent': {'type': 'database_id', 'database_id': '9998849e-9ad0-4f53-9744-54da4772faac'},
+                    'archived': False,
+                    'in_trash': False,
+                    'properties': {
+                        'Record Creation Time': {'id': '%3Epj%3F', 'type': 'created_time', 'created_time': '2024-09-17T18:13:00.000Z'},
+                        'Has been watched?': {'id': 'JWwd', 'type': 'checkbox', 'checkbox': False},
+                        'Link': {'id': 'idU%7D', 'type': 'url', 'url': 'https://www.youtube.com/watch?v=JucD81ofaGY'},      
+                        'Video ID': {
+                            'id': '%7Cy%3AN',
+                            'type': 'rich_text',
+                            'rich_text': [{
+                                'type': 'text',
+                                'text': {'content': 'JucD81ofaGY', 'link': None},
+                                'annotations': {'bold': False, 'italic': False, 'strikethrough': False, 'underline': False, 'code': False, 'color': 'default'},
+                                'plain_text': 'JucD81ofaGY',
+                                'href': None
+                            }]
+                        }
+                    },
+                    'url': 'https://www.notion.so/MH370-How-One-Person-Destroyed-239-Lives-104a0c220c52816aa606db88c19e40af',
+                    'public_url': None
+                }],
+                'next_cursor': '104a0c22-0c52-81ae-beb0-fbb29c64a3b2',
+                'has_more': True,
+                'href': None
+            }
+
+            video_id = client.extract_video_id_from_page(page_response)
+
+            assert video_id == 'JucD81ofaGY', "Expected extract_video_id_from_page to return 'JucD81ofaGY', but it did not return 'JucD81ofaGY'"
