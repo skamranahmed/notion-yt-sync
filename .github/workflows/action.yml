@@ -1,0 +1,38 @@
+name: Run Notion YT Sync Script
+
+on:
+  schedule:
+    - cron: "0 */24 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo content
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+
+      - name: Install project dependencies
+        run: poetry install --no-interaction
+
+      - name: Execute Notion YT script
+        run: poetry run python main.py
+        env:
+          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+          NOTION_INTERNAL_INTEGRATION_SECRET: ${{ secrets.NOTION_INTERNAL_INTEGRATION_SECRET }}
+          NOTION_API_BASE_URL: ${{ secrets.NOTION_API_BASE_URL }}
+          NOTION_DATABASE_ID_WYNGX: ${{ secrets.NOTION_DATABASE_ID_WYNGX }}
+          NOTION_DATABASE_ID_VERITASIUM: ${{ secrets.NOTION_DATABASE_ID_VERITASIUM }}
+          REMOTE_URL_FOR_YOUTUBE_CHANNELS_CONFIG_JSON: ${{ secrets.REMOTE_URL_FOR_YOUTUBE_CHANNELS_CONFIG_JSON }}
