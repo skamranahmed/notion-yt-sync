@@ -1,6 +1,10 @@
 from config import get_config
 import requests
 
+class NotionAPIError(Exception):
+    """Custom exception for Notion API errors"""
+    pass
+
 class NotionClient:
     _instance = None
 
@@ -42,11 +46,17 @@ class NotionClient:
             ],
             "page_size": 1
         }
-        response = requests.post(
+
+        try:
+            response = requests.post(
             url = query_database_endpoint,
             headers = self._REQUEST_HEADERS, 
-            json = payload
-        )
+                json = payload
+            )
+            response.raise_for_status()
+        except requests.HTTPError as e:
+            raise NotionAPIError(f"notion api error #fetch_most_recent_page_from_database , got status code: {response.status_code}") from e
+
         return response.json()
     
     def extract_video_id_from_page(self, page_json):
@@ -93,9 +103,15 @@ class NotionClient:
                 }
             }
         }
-        response = requests.post(
-            url = create_page_endpoint,
-            headers = self._REQUEST_HEADERS, 
-            json = payload
-        )
+
+        try:
+            response = requests.post(
+                url = create_page_endpoint,
+                headers = self._REQUEST_HEADERS, 
+                json = payload
+            )
+            response.raise_for_status()
+        except requests.HTTPError as e:
+            raise NotionAPIError(f"notion api error #create_page_in_database , got status code: {response.status_code}") from e
+        
         return response.json()

@@ -27,6 +27,16 @@ jobs:
       - name: Install project dependencies
         run: poetry install --no-interaction
 
+      - name: Run tests
+        run: poetry run python -m pytest tests/
+        env:
+          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+          NOTION_INTERNAL_INTEGRATION_SECRET: ${{ secrets.NOTION_INTERNAL_INTEGRATION_SECRET }}
+          NOTION_API_BASE_URL: ${{ secrets.NOTION_API_BASE_URL }}
+          NOTION_DATABASE_ID_WYNGX: ${{ secrets.NOTION_DATABASE_ID_WYNGX }}
+          NOTION_DATABASE_ID_VERITASIUM: ${{ secrets.NOTION_DATABASE_ID_VERITASIUM }}
+          REMOTE_URL_FOR_YOUTUBE_CHANNELS_CONFIG_JSON: ${{ secrets.REMOTE_URL_FOR_YOUTUBE_CHANNELS_CONFIG_JSON }}
+
       - name: Execute Notion YT script
         run: poetry run python main.py
         env:
