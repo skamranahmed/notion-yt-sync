@@ -16,6 +16,12 @@ def process_channel(notion_client: NotionClient, youtube_client: YoutubeClient, 
     new_videos_to_be_inserted_in_notion: List[Dict] = []
 
     for video in channel_videos_sorted_by_latest_first:
+        if video is None:
+            logging.info(
+                f'No videos found for the channel name: {channel_name}, '
+                f'channel url: {channel_config["channel_url"]}'
+                )
+            break
         if latest_video_id == video['id']:
             logging.info(
                 f'Stopped fetching videos for the channel name: {channel_name}, '
