@@ -79,7 +79,7 @@ In the `.env` file, you will find two variables: `NOTION_DATABASE_ID_WYNGX` and 
 
 #### Step 6: Running the project locally
 
-1. Ensure `poetry` is installed 
+1. Ensure `poetry` (v1.8.4) is installed 
    > If Poetry is not installed on your system, follow the [installation guide here](https://python-poetry.org/docs/#installation).
 
 2. Install dependencies 
@@ -107,7 +107,6 @@ You can clone this project, customize it to fit your needs, and push it to your 
 
 ### Todo 📝
 
-- [ ] Write a Dockerfile
 - [ ] Write instructions to run the project via Docker
 - [ ] Create a Makefile
 
